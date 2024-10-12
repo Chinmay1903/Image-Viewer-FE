@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL
-const BASE_URL = 'http://127.0.0.1:7000/api';
+const BASE_URL = 'https://4aac-2401-4900-1c85-d6ac-d0b7-49c-459e-f78b.ngrok-free.app/api';
 
 // Login function using axios
 export const login = async (username: string, password: string) => {

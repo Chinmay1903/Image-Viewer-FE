@@ -8,19 +8,23 @@ interface Props {
 
 const Dashboard: React.FC<Props> = ({ token }) => {
     const [images, setImages] = useState<any[]>([]);
+    const [refresh, setRefresh] = useState(false);
 
     const fetchImages = async () => {
+        console.log('image fetching');
+        console.log(refresh)
         const data = await getImages(token);            
         setImages(data.images);
+        setRefresh(false);
     };
 
     useEffect(() => {
         fetchImages();
-    }, [token]);
+    }, [refresh]);
 
     return (
         <div>
-            <Upload token={token} onUploadComplete={fetchImages}/>
+            <Upload token={token} isRefresh={setRefresh}/>
             <div className='container-fluid mt-4'>
                 <h2 className='text-center my-4'>Your Uploaded Images</h2>
                 <div className="row row-cols-3 text-center">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { login, register } from '../api';
+import { AxiosError } from 'axios';
 
 interface AuthProps {
     setToken: (token: string|null) => void;
@@ -9,7 +10,7 @@ const Auth: React.FC<AuthProps> = ({ setToken }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
-    const [error, setError] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,9 +28,11 @@ const Auth: React.FC<AuthProps> = ({ setToken }) => {
                 localStorage.setItem('refresh-token', data.refresh); // Store token in localStorage for persistence
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             setToken(null);
-            setError(error.response.data.message);
+            if (error instanceof AxiosError) {
+                setErrorMessage(error.response?.data?.message);
+            }
         }
     };
 
@@ -50,7 +53,7 @@ const Auth: React.FC<AuthProps> = ({ setToken }) => {
                     <button type="button" className="btn btn-primary" onClick={() => setIsRegistering(!isRegistering)}>{isRegistering ? 'Already have an account? Login' : 'Need an account? Register'}</button>
                 </div>
             </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </div>
     );
 };

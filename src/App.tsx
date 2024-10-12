@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import Auth from "./components/Auth";
 import Dashboard from "./components/Dashboard";
 import Logout from "./components/Logout";
-import { checkToken, getToken } from "./api";
+// import { checkToken, getToken } from "./api";
 
 const App: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access-token");
-    const refreshToken = localStorage.getItem("refresh-token");
+    // const refreshToken = localStorage.getItem("refresh-token");
     setToken(accessToken);
     // if (accessToken && refreshToken) {
     //   setLoading(true);
