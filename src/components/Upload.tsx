@@ -3,22 +3,21 @@ import { uploadImage } from '../api';
 
 interface Props {
     token: string;
-    isRefresh: (refresh: boolean) => void;
+    onUploadComplete: () => void;
 }
 
-const Upload: React.FC<Props> = ({ token, isRefresh }) => {
+const Upload: React.FC<Props> = ({ token, onUploadComplete }) => {
     const [file, setFile] = useState<File | null>(null);
 
-    const handleUpload = async () => {
-
+    const handleUpload = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
         if (file) {
             console.log(token);
             try {
-                const response = await uploadImage(file, token);
-                if (response.ok) {
-                    alert('Image uploaded successfully');
-                    isRefresh(true);
-                }
+                await uploadImage(file, token);
+                alert('Image uploaded successfully');
+                onUploadComplete();
             } catch (error) {
                 console.error('Upload failed:', error);
             }
